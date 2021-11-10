@@ -41,11 +41,6 @@ func main() {
 	}
 
 	r := gin.Default()
-	// CORS for https://foo.com and https://github.com origins, allowing:
-	// - PUT and PATCH methods
-	// - Origin header
-	// - Credentials share
-	// - Preflight requests cached for 12 hours
 	r.Use(cors.New(cors.Config{
 		AllowOrigins:     []string{"http://localhost:8081"},
 		AllowMethods:     []string{"PUT", "PATCH", "GET", "POST"},
