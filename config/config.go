@@ -1,11 +1,12 @@
 package config
 
 import (
+	"fmt"
 	"lab2/controllers"
 	"lab2/models"
 
 	"github.com/caarlos0/env"
-	"gorm.io/driver/sqlite"
+	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
 
@@ -44,7 +45,8 @@ func LoadCfg() (AppConfig, error) {
 }
 
 func (app *AppConfig) ConnectDatabase() (database controllers.Database, err error) {
-	gorm, err := gorm.Open(sqlite.Open("gorm.db"), &gorm.Config{})
+	dns := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=enable", app.DatabaseConfig.Host, app.DatabaseConfig.Port, app.DatabaseConfig.User, app.DatabaseConfig.Password, app.DatabaseConfig.Name)
+	gorm, err := gorm.Open(postgres.Open(dns), &gorm.Config{})
 
 	if err != nil {
 		panic("Failed to connect to database!")
