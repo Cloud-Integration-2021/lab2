@@ -18,7 +18,7 @@ steps:
   image: plugins/docker
   settings:
     auto_tag: true
-    repo: thomaslacaze/wakapi-stats
+    repo: thomaslacaze/lab2
     username:
       from_secret: docker_username
     password:
