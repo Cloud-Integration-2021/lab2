@@ -16,11 +16,13 @@ type Database struct {
 type CreateMovieInput struct {
 	Title       string `json:"title" binding:"required"`
 	ReleaseDate string `json:"releaseDate" binding:"required"`
+	Plot        string `json:"plot"`
 }
 
 type UpdateMovieInput struct {
 	Title       string `json:"title"`
 	ReleaseDate string `json:"releaseDate"`
+	Plot        string `json:"plot"`
 }
 
 // GET /Movies
@@ -81,6 +83,7 @@ func (DB *Database) UpdateMovie(c *gin.Context) {
 
 	Movie.Title = input.Title
 	Movie.ReleaseDate = input.ReleaseDate
+	Movie.Plot = input.Plot
 
 	DB.Model(&Movie).Updates(Movie)
 
