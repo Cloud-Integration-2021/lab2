@@ -36,16 +36,15 @@ func IsDev(env string) bool {
 // LoadCfg loads the config file.
 func LoadCfg() (AppConfig, error) {
 
-	cfg := &AppConfig{}
-	if err := env.Parse(&cfg); err != nil {
-		return AppConfig{}, err
-	}
+	cfg := AppConfig{}
+	env.Parse(&cfg)
+	env.Parse(&cfg.DatabaseConfig)
 
-	return AppConfig{}, nil
+	return cfg, nil
 }
 
 func (app *AppConfig) ConnectDatabase() (database controllers.Database, err error) {
-	dns := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=enable", app.DatabaseConfig.Host, app.DatabaseConfig.Port, app.DatabaseConfig.User, app.DatabaseConfig.Password, app.DatabaseConfig.Name)
+	dns := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable", app.DatabaseConfig.Host, app.DatabaseConfig.Port, app.DatabaseConfig.User, app.DatabaseConfig.Password, app.DatabaseConfig.Name)
 	gorm, err := gorm.Open(postgres.Open(dns), &gorm.Config{})
 
 	if err != nil {
