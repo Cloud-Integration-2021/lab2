@@ -3,6 +3,7 @@ package main
 import (
 	"lab2/config"
 	"log"
+	"os"
 	"time"
 
 	"github.com/gin-contrib/cors"
@@ -18,6 +19,7 @@ func main() {
 	config, err := config.LoadCfg()
 	if err != nil {
 		log.Printf("Error to parsing env %v", err)
+		os.Exit(0)
 	}
 
 	// Set log level
@@ -60,7 +62,7 @@ func main() {
 	r.PUT("/movies/:id", DB.UpdateMovie)
 	r.DELETE("/movies/:id", DB.DeleteMovie)
 
-	err = r.Run(":8080")
+	err = r.Run(":8081")
 	if err != nil {
 		log.Println("Unable to start web server")
 	}
