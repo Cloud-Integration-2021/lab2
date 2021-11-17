@@ -35,7 +35,7 @@ steps:
   image: thomaslacaze/dockerhub-description:2.4.1
   pull: always
   settings:
-    repository: thomaslacaze/wakapi-stats
+    repository: thomaslacaze/lab3
     username:
       from_secret: docker_username
     password:
