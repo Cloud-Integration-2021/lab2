@@ -58,7 +58,7 @@ func (DB *Database) CreateMovie(c *gin.Context) {
 	}
 
 	// Create Movie
-	Movie := models.Movie{Title: input.Title, ReleaseDate: input.ReleaseDate}
+	Movie := models.Movie{Title: input.Title, ReleaseDate: input.ReleaseDate, Plot: input.Plot}
 	DB.Create(&Movie)
 
 	c.JSON(http.StatusOK, Movie)
