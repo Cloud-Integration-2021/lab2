@@ -68,8 +68,8 @@ func (DB *Database) CreateMovie(c *gin.Context) {
 // Update a Movie
 func (DB *Database) UpdateMovie(c *gin.Context) {
 	// Get model if exist
-	var Movie models.Movie
-	if err := DB.Where("id = ?", c.Param("id")).First(&Movie).Error; err != nil {
+	var movie models.Movie
+	if err := DB.Where("id = ?", c.Param("id")).First(&movie).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Record not found!"})
 		return
 	}
@@ -81,13 +81,13 @@ func (DB *Database) UpdateMovie(c *gin.Context) {
 		return
 	}
 
-	Movie.Title = input.Title
-	Movie.ReleaseDate = input.ReleaseDate
-	Movie.Plot = input.Plot
+	movie.Title = input.Title
+	movie.ReleaseDate = input.ReleaseDate
+	movie.Plot = input.Plot
 
-	DB.Model(&Movie).Updates(Movie)
+	DB.Save(&movie)
 
-	c.JSON(http.StatusOK, Movie)
+	c.JSON(http.StatusOK, movie)
 }
 
 // DELETE /Movies/:id
