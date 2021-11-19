@@ -16,11 +16,11 @@ type AppConfig struct {
 }
 
 type DatabaseConfig struct {
-	Host     string `env:"DB_HOST" envDefault:"localhost"`
-	Port     string `env:"DB_PORT" envDefault:"5432"`
-	User     string `env:"DB_USER" envDefault:"postgres"`
-	Password string `env:"DB_PASSWORD" envDefault:"postgres"`
-	Name     string `env:"DB_NAME" envDefault:"postgres"`
+	Host     string `env:"DB_HOST" envDefault:"localhost"` // Hostname of the postgres server
+	Port     string `env:"DB_PORT" envDefault:"5432"` // Port of the postgres server
+	User     string `env:"DB_USER" envDefault:"postgres"` // Username to connect to the postgres server
+	Password string `env:"DB_PASSWORD" envDefault:"postgres"` // Password to connect to the postgres server
+	Name     string `env:"DB_NAME" envDefault:"postgres"` // Name of the database
 }
 
 //IsDev return true if application is on dev stack
