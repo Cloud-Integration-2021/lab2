@@ -16,14 +16,14 @@ func main() {
 	gin.SetMode(gin.ReleaseMode)
 
 	// Load configuration
-	config, err := config.LoadCfg()
+	cfg, err := config.LoadCfg()
 	if err != nil {
 		log.Printf("Error to parsing env %v", err)
 		os.Exit(0)
 	}
 
 	// Set log level
-	if config.IsDev() {
+	if cfg.IsDev() {
 		logger, err = zap.NewDevelopment()
 	} else {
 		logger, err = zap.NewProduction()
@@ -33,24 +33,29 @@ func main() {
 		zap.S().Error("Error to initialize logger")
 	}
 
-	defer logger.Sync()
+	defer func(logger *zap.Logger) {
+		err := logger.Sync()
+		if err != nil {
+			zap.Error(err)
+		}
+	}(logger)
 	zap.ReplaceGlobals(logger)
 
 	//Setup database
-	DB, err := config.ConnectDatabase()
+	DB, err := cfg.ConnectDatabase()
 	if err != nil {
 		zap.S().Error("Error to connect database")
 	}
 
 	r := gin.Default()
 	r.Use(cors.New(cors.Config{
-		AllowOrigins:     []string{"http://localhost:8081"},
+		AllowOrigins:     []string{"*"},
 		AllowMethods:     []string{"PUT", "PATCH", "GET", "POST"},
 		AllowHeaders:     []string{"Origin"},
 		ExposeHeaders:    []string{"Content-Length"},
 		AllowCredentials: true,
 		AllowOriginFunc: func(origin string) bool {
-			return origin == "http://localhost:8081"
+			return origin == "*"
 		},
 		MaxAge: 12 * time.Hour,
 	}))

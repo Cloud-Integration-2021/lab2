@@ -25,8 +25,8 @@ type UpdateMovieInput struct {
 	Plot        string `json:"plot"`
 }
 
+// FindMovies
 // GET /Movies
-// Find all Movies
 func (DB *Database) FindMovies(c *gin.Context) {
 	var Movies []models.Movie
 	DB.Find(&Movies)
@@ -34,8 +34,8 @@ func (DB *Database) FindMovies(c *gin.Context) {
 	c.JSON(http.StatusOK, Movies)
 }
 
+// FindMovieById
 // GET /Movies/:id
-// Find a Movie
 func (DB *Database) FindMovieById(c *gin.Context) {
 	// Get model if exist
 	var Movie models.Movie
@@ -47,8 +47,8 @@ func (DB *Database) FindMovieById(c *gin.Context) {
 	c.JSON(http.StatusOK, Movie)
 }
 
+// CreateMovie
 // POST /Movies
-// Create new Movie
 func (DB *Database) CreateMovie(c *gin.Context) {
 	// Validate input
 	var input CreateMovieInput
@@ -64,8 +64,8 @@ func (DB *Database) CreateMovie(c *gin.Context) {
 	c.JSON(http.StatusOK, Movie)
 }
 
+// UpdateMovie
 // PUT /Movies/:id
-// Update a Movie
 func (DB *Database) UpdateMovie(c *gin.Context) {
 	// Get model if exist
 	var movie models.Movie
@@ -90,8 +90,8 @@ func (DB *Database) UpdateMovie(c *gin.Context) {
 	c.JSON(http.StatusOK, movie)
 }
 
+// DeleteMovie
 // DELETE /Movies/:id
-// Delete a Movie
 func (DB *Database) DeleteMovie(c *gin.Context) {
 	// Get model if exist
 	var Movie models.Movie

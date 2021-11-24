@@ -24,8 +24,8 @@ type DatabaseConfig struct {
 }
 
 //IsDev return true if application is on dev stack
-func (c *AppConfig) IsDev() bool {
-	return IsDev(c.Env)
+func (app *AppConfig) IsDev() bool {
+	return IsDev(app.Env)
 }
 
 //IsDev return true if application is on dev stack
@@ -37,22 +37,31 @@ func IsDev(env string) bool {
 func LoadCfg() (AppConfig, error) {
 
 	cfg := AppConfig{}
-	env.Parse(&cfg)
-	env.Parse(&cfg.DatabaseConfig)
+	err := env.Parse(&cfg)
+	if err != nil {
+		return AppConfig{}, err
+	}
+	err = env.Parse(&cfg.DatabaseConfig)
+	if err != nil {
+		return AppConfig{}, err
+	}
 
 	return cfg, nil
 }
 
 func (app *AppConfig) ConnectDatabase() (database controllers.Database, err error) {
 	dns := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable", app.DatabaseConfig.Host, app.DatabaseConfig.Port, app.DatabaseConfig.User, app.DatabaseConfig.Password, app.DatabaseConfig.Name)
-	gorm, err := gorm.Open(postgres.Open(dns), &gorm.Config{})
+	db, err := gorm.Open(postgres.Open(dns), &gorm.Config{})
 
 	if err != nil {
 		panic("Failed to connect to database!")
 	}
 
-	gorm.AutoMigrate(&models.Movie{})
-	database.DB = gorm
+	err = db.AutoMigrate(&models.Movie{})
+	if err != nil {
+		return controllers.Database{}, err
+	}
+	database.DB = db
 
 	return database, nil
 }
