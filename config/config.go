@@ -2,7 +2,7 @@ package config
 
 import (
 	"fmt"
-	"lab2/controllers"
+	"lab2/controllers/v1"
 	"lab2/models"
 
 	"github.com/caarlos0/env"
@@ -49,7 +49,7 @@ func LoadCfg() (AppConfig, error) {
 	return cfg, nil
 }
 
-func (app *AppConfig) ConnectDatabase() (database controllers.Database, err error) {
+func (app *AppConfig) ConnectDatabase() (database v1.Database, err error) {
 	dns := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable", app.DatabaseConfig.Host, app.DatabaseConfig.Port, app.DatabaseConfig.User, app.DatabaseConfig.Password, app.DatabaseConfig.Name)
 	db, err := gorm.Open(postgres.Open(dns), &gorm.Config{})
 
@@ -59,7 +59,7 @@ func (app *AppConfig) ConnectDatabase() (database controllers.Database, err erro
 
 	err = db.AutoMigrate(&models.Movie{})
 	if err != nil {
-		return controllers.Database{}, err
+		return v1.Database{}, err
 	}
 	database.DB = db
 

@@ -1,4 +1,4 @@
-package controllers
+package v1
 
 import (
 	"net/http"
@@ -103,9 +103,4 @@ func (DB *Database) DeleteMovie(c *gin.Context) {
 	DB.Delete(&Movie)
 
 	c.JSON(http.StatusOK, Movie)
-}
-// FindActorsByMovieId
-// GET /actors/:idMovie
-func FindActorsByMovieId(c *gin.Context) {
-	c.JSON(http.StatusOK, models.GenerateRandomActors())
 }
