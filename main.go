@@ -2,6 +2,7 @@ package main
 
 import (
 	"lab2/config"
+	"lab2/controllers"
 	"log"
 	"os"
 	"time"
@@ -41,12 +42,6 @@ func main() {
 	}(logger)
 	zap.ReplaceGlobals(logger)
 
-	//Setup database
-	DB, err := cfg.ConnectDatabase()
-	if err != nil {
-		zap.S().Error("Error to connect database")
-	}
-
 	r := gin.Default()
 	r.Use(cors.New(cors.Config{
 		AllowOrigins:     []string{"*"},
@@ -60,12 +55,8 @@ func main() {
 		MaxAge: 12 * time.Hour,
 	}))
 
-	// Routes
-	r.GET("/movies", DB.FindMovies)
-	r.GET("/movies/:id", DB.FindMovieById)
-	r.POST("/movies", DB.CreateMovie)
-	r.PUT("/movies/:id", DB.UpdateMovie)
-	r.DELETE("/movies/:id", DB.DeleteMovie)
+	// Route
+	r.GET("/actors/:id", controllers.FindActorsByMovieId)
 
 	err = r.Run(":8081")
 	if err != nil {
