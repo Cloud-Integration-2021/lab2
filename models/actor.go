@@ -8,7 +8,6 @@ type Actor struct {
 	BirthDate string `json:"birthDate"`
 }
 
-
 func generateRandomActor()(a Actor){
 
 	a.FirstName = gofakeit.FirstName()
@@ -20,7 +19,7 @@ func generateRandomActor()(a Actor){
 
 func GenerateRandomActors()(actors []Actor){
 
-	randomNumber := gofakeit.Number(0,10)
+	randomNumber := gofakeit.Number(1,10)
 
 	for i := 0; i < randomNumber; i++ {
 		actors = append(actors, generateRandomActor())
