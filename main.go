@@ -67,7 +67,7 @@ func main() {
 	r.POST("/movies", DB.CreateMovie)
 	r.PUT("/movies/:id", DB.UpdateMovie)
 	r.DELETE("/movies/:id", DB.DeleteMovie)
-	r.GET("/actors/:id", v2.FindActorsByMovieId)
+	r.GET("/movies/:id/actors", v2.FindActorsByMovieId)
 
 	err = r.Run(":8081")
 	if err != nil {
