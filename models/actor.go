@@ -5,7 +5,7 @@ import "github.com/brianvoe/gofakeit"
 type Actor struct {
 	FirstName string `json:"firstName"`
 	LastName string `json:"lastName"`
-	BirthDate string `json:"releaseDate"`
+	BirthDate string `json:"birthDate"`
 }
 
 
