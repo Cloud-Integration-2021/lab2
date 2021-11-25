@@ -67,7 +67,6 @@ func main() {
 	r.POST("/movies", DB.CreateMovie)
 	r.PUT("/movies/:id", DB.UpdateMovie)
 	r.DELETE("/movies/:id", DB.DeleteMovie)
-	// Route
 	r.GET("/actors/:id", controllers.FindActorsByMovieId)
 
 	err = r.Run(":8081")
