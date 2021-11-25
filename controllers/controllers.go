@@ -104,3 +104,8 @@ func (DB *Database) DeleteMovie(c *gin.Context) {
 
 	c.JSON(http.StatusOK, Movie)
 }
+// FindActorsByMovieId
+// GET /actors/:idMovie
+func FindActorsByMovieId(c *gin.Context) {
+	c.JSON(http.StatusOK, models.GenerateRandomActors())
+}
